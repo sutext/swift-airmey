@@ -8,21 +8,18 @@
 import UIKit
 
 public class AMTextView: UITextView {
-    /// setNeedsDisplay调用drawRect
     public var placeholder: String = "" {
         didSet{
             self.setNeedsDisplay()
         }
     }
     
-    /// 占位文字颜色
     public var placeHolderColor: UIColor = UIColor.gray{
         didSet{
             self.setNeedsDisplay()
         }
     }
     
-    /// 占位文字Inset
     public var placeholderInset: UIEdgeInsets = .init(top: 7, left: 5, bottom: 0, right: 0)
     
     public override var font: UIFont?{
@@ -65,7 +62,6 @@ public class AMTextView: UITextView {
         let newOrigin = CGPoint(x: placeholderInset.left, y: placeholderInset.top)
         let newSize = CGSize(width: size.width, height: size.height)
         let newRect = CGRect(origin: newOrigin, size: newSize)
-        /// 将placeHolder画在textView上
         (self.placeholder as NSString).draw(in: newRect, withAttributes: [NSAttributedString.Key.font: self.font ?? UIFont.systemFont(ofSize: 14),NSAttributedString.Key.foregroundColor: self.placeHolderColor])
     }
     
@@ -82,15 +78,7 @@ public class AMTextView: UITextView {
 
 
 extension String {
-    /// 计算字符串的尺寸
-    ///
-    /// - Parameters:
-    ///   - text: 字符串
-    ///   - rectSize: 容器的尺寸
-    ///   - fontSize: 字体
-    /// - Returns: 尺寸
-    ///
-    public func getStringSize(rectSize: CGSize,font: UIFont) -> CGSize {
+    func getStringSize(rectSize: CGSize,font: UIFont) -> CGSize {
         let str: NSString = self as NSString
         let rect = str.boundingRect(with: rectSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
         return CGSize(width: ceil(rect.width), height: ceil(rect.height))
