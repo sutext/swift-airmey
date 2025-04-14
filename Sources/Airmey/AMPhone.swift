@@ -48,22 +48,16 @@ public enum AMPhone {
             return false
         }
     }()
-    ///灵动岛 iphone 14Pro 14Pro Max
     public static let isDynamicIsland: Bool = {
         // 1. dynamicIsland only support iPhone
         guard UIDevice.current.userInterfaceIdiom == .phone else {
             return false
         }
         // 2. Get key window, working after sceneDidBecomeActive
-        if #available(iOS 13.0, *) {
-            guard let window = (UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.flatMap { $0.windows }.first { $0.isKeyWindow}) else {
-                print("Do not found key window")
-                return false
-            }
+        if let window = UIApplication.shared.__keyWindow{
             return window.safeAreaInsets.top >= 51
-        } else {
-            return false
         }
+        return false
     }()
     /// The device id base on keychain
     public static let uuid : String  = {

@@ -34,8 +34,6 @@ public class CCNavBar: AMToolBar {
             }
         }
     }
-    /// 设置左边导航栏items 默认值为[.back]
-    /// 重新设置会覆盖已经有的
     public var leftItems:[Item]?{
         didSet{
             if oldValue != nil {
@@ -46,8 +44,6 @@ public class CCNavBar: AMToolBar {
             }
         }
     }
-    /// 设置左边导航栏items 默认值为nil
-    /// 重新设置会覆盖已经有的
     public var rightItems:[Item]?{
         didSet{
             if oldValue != nil {
@@ -58,7 +54,6 @@ public class CCNavBar: AMToolBar {
             }
         }
     }
-    /// 覆盖内置item的点击事件
     public func setAction(_ type:ItemType,at index:Int,action:ONClick?){
         let stack = type == .left ? leftStack : rightStack
         guard index < stack.arrangedSubviews.count else {
@@ -131,9 +126,7 @@ extension CCNavBar{
         case right
     }
     public enum Item{
-        /// 通用自定义item
         case custom(UIView)
-        
         fileprivate var content:UIView{
             switch self {
             case .custom(let v):
@@ -144,8 +137,6 @@ extension CCNavBar{
 }
 fileprivate var navbarKey:Void?
 extension UIViewController{
-    ///快捷启用导航条
-    ///通过runtime 做数据绑定 避免规定必须继承某个基类
     public var navbar:CCNavBar{
         if let bar = objc_getAssociatedObject(self, &navbarKey) as? CCNavBar{
             return bar

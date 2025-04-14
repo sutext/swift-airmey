@@ -77,7 +77,7 @@ open class AMButton: UIButton {
     public func apply(item:AMButtonItem,for state :UIControl.State){
         self.imageSize = item.imageSize ?? item.image?.size ?? CGSize.zero;
         if let image = item.image {
-            self.setImage(image, for: state);
+            self.setImage(image, for: state)
         }
         else if let color = item.imageColor{
             self.setImage(with: color, for: state);

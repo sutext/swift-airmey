@@ -13,7 +13,7 @@ class RootViewController: AMLayoutViewContrller {
     let tabbarController:UITabBarController = UITabBarController()
     init() {
         super.init(rootViewController: tabbarController)
-        self.leftDisplayMode = .cover
+        self.leftDisplayMode = .background
         root = self
     }
     

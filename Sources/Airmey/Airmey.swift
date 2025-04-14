@@ -26,19 +26,22 @@ public extension CGFloat{
     ///The screen height
     static var screenHeight:CGFloat{ UIScreen.main.bounds.height }
     ///The scree header height. Usually it's safeAreaInsets.top
-    static var headerHeight:CGFloat{
-        guard let window = UIApplication.shared.keyWindow else{
-            return  UIApplication.shared.statusBarFrame.size.height
+    static var headerHeight:CGFloat = {
+        guard let scene = (UIApplication.shared.connectedScenes.first{$0.activationState == .foregroundActive} as? UIWindowScene) else{
+            return 20
+        }
+        guard let window = (scene.windows.first{ $0.isKeyWindow })else{
+            return scene.statusBarManager?.statusBarFrame.height ?? 20
         }
         return window.safeAreaInsets.top
-    }
+    }()
     ////The scree footer height. Usually it's safeAreaInsets.bottom
-    static var footerHeight:CGFloat{
-        if let window = UIApplication.shared.keyWindow{
+    static var footerHeight:CGFloat = {
+        if let window = UIApplication.shared.__keyWindow{
             return window.safeAreaInsets.bottom
         }
         return AMPhone.isSlim ? 34 : 0
-    }
+    }()
     ///The scaled scalar using scaleFactor.
     static func scaled(_ origin:CGFloat) -> CGFloat{
         return origin * .scaleFactor
@@ -171,5 +174,13 @@ extension Result{
             return value
         }
         return nil
+    }
+}
+extension UIApplication{
+    var __keyWindow:UIWindow?{
+        guard let scene = (connectedScenes.first{$0.activationState == .foregroundActive} as? UIWindowScene) else{
+            return windows.first { $0.isKeyWindow }
+        }
+        return scene.windows.first{ $0.isKeyWindow }
     }
 }

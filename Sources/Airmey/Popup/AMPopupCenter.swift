@@ -138,7 +138,7 @@ extension AMPopupCenter{
     }
     /// current top controller from the key window
     public var top:UIViewController?{
-        var next:UIViewController? = UIApplication.shared.keyWindow?.rootViewController
+        var next:UIViewController? = UIApplication.shared.__keyWindow?.rootViewController
         while next?.presentedViewController != nil {
             next = next?.presentedViewController
         }
